@@ -5,6 +5,10 @@ int main(){
   string s = "geeks for geek";
   char buf[1024];
   memset(buf,'\0',1024);
+  
+  /*this converts the string into char pointer whose contents are then copied to the char array(buf) for
+  performing swapping on words                
+  */
   strcpy(buf,s.c_str());
   cout<<"buf = "<<buf<<endl;
   char *token[1024];
