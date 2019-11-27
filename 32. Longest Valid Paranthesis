@@ -5,6 +5,8 @@
 class Solution {
 public:
     int longestValidParentheses(string s) {
+    
+    //stack of indexes
         stack<int>strstack;
         int len=0;
         int maxlen = 0;
@@ -13,11 +15,16 @@ public:
         //s.push(-1);
         for(int i=0;i<n;i++)
         {
+        //is the char == '(' then push the index of that char to stack
             if(s[i] == '(')
             {
                 strstack.push(i);
             }
             else{
+            /* if char == ')' then pop the char in stack first then calculate the length of the valid paranthesis
+                by index of char - stacktop()
+                if after popping the element, the stack is empty then push the index of element to stack
+            */
               strstack.pop();
                 if(strstack.empty())
                 {
