@@ -1,0 +1,39 @@
+//C++ solution to the leetcode problem number 32 
+
+
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int>strstack;
+        int len=0;
+        int maxlen = 0;
+        strstack.push(-1);
+        int n = s.length();
+        //s.push(-1);
+        for(int i=0;i<n;i++)
+        {
+            if(s[i] == '(')
+            {
+                strstack.push(i);
+            }
+            else{
+              strstack.pop();
+                if(strstack.empty())
+                {
+                    strstack.push(i);
+                  
+                }
+                else
+                {
+                      
+                    len = i-strstack.top();
+                    if(len> maxlen)
+                        maxlen = len;
+                }
+            }
+        }
+        return maxlen;
+        
+    }
+};
