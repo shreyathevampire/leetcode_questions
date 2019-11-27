@@ -1,0 +1,53 @@
+///////C++ solution for the 717 problem of leetcode
+
+
+
+
+class Solution {
+public:
+    bool isOneBitCharacter(vector<int>& bits) {
+        int n = bits.size();
+        
+        //length of bit vector is 1
+        if(n == 1)
+            return true;
+        // length of bit vector is 2
+        else if(n == 2){
+            if(bits[0] == 0 && bits[1] == 0)
+                return true;
+            else
+                return false;
+        }
+        //if length of bit vector is >= 3
+        else{
+          int i=0;
+            while(i<n)
+            {
+                
+                /*checking if the bit is 1 or 0
+                if bit == 1 then skip the next bit
+                ie if bit = 1 at 5th position, skip 6th and check for 7th
+                position 
+                if bit == 0 then check the next bit
+                continue this till the end and then check if the last bit                      is 1
+                if bit[n-1] == 1 then accept the string else reject
+                */
+                cout<<"value = "<<bits[i]<<"i = "<<i<<endl;
+                if(bits[i]==1)
+                {
+                     cout<<"in 1"<<endl;
+                    cout<<i<<endl;
+                    i++;
+                }
+                else if(i==n-1 && bits[i] == 0){
+                    cout<<i<<endl;
+                    return true;
+                }
+                cout<<" i = "<<i<<endl;
+                i++;
+            }
+            
+        }
+        return false;
+    }
+};
