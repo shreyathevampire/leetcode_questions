@@ -1,0 +1,34 @@
+// C++ solution for the above leetcode problem
+//exactly 2 numbers appear only once
+
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int n = nums.size();
+        int res = 0;
+        // exor of all the numbers
+        for(int i=0;i<n;i++){
+            res = res ^ nums[i];
+        }
+        
+        
+        
+        int div = res & ~ (res-1);
+        //cout<<div<<endl;
+        int x=0;
+        int y=0;
+        vector<int> op;
+        for(int i=0;i<n;i++){
+            if(nums[i] & div){
+                x = x ^ nums[i];
+            }
+            else
+            {
+                y = y ^ nums[i];
+            }
+        }
+        op.push_back(x);
+        op.push_back(y);
+        return op;
+    }
+};
