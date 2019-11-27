@@ -1,0 +1,92 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        map<char,string>pat_str;
+        map<string,char>str_pat;
+        
+        char patval;
+        string stringval;
+        
+        //split string into array of strings
+        char temp[10000];
+        strcpy(temp,str.c_str());
+        char *clargs[10000];
+        int n=1;
+        
+        clargs[0] = strtok(temp," ");
+        
+        while((clargs[n] = strtok(NULL," "))!= NULL)
+            n++;
+        
+        clargs[n] = NULL;
+        
+        for(int i=0;i<n;i++)
+            cout<<clargs[i]<<endl;
+        
+        
+        //checking if the length of pattern equals to the number of strings in the array
+        if (n != pattern.length())
+            return false;
+        
+        
+        
+        pat_str.insert(make_pair(pattern[0],clargs[0]));
+        str_pat.insert(make_pair(clargs[0],pattern[0]));
+        for(int i=1;i<pattern.length();i++)
+        {
+            patval = pattern[i];
+            stringval = clargs[i];
+            bool end = false;
+            bool send = false;
+            string stringfound;
+            char patternfound;
+            //finding string using char as key
+            for(auto it = pat_str.begin(); it != pat_str.end() ; it++)
+            {
+                if(pat_str.find(patval) == pat_str.end())
+                {
+                    end = true;
+                }
+                else{
+                    stringfound = pat_str[patval];
+                    break;
+                }
+            }
+            //finding char using string as key
+            for(auto it = str_pat.begin(); it != str_pat.end() ; it++)
+            {
+                    if(str_pat.find(stringval) == str_pat.end())
+                    {
+                        send = true;
+                    }
+                else{
+                     patternfound = str_pat[stringval];
+                    break;
+                }
+            }
+                
+             // if both the maps do not contain the values  
+            if(send == true && end == true)
+            {
+              
+                pat_str.insert(make_pair(patval,stringval));
+                str_pat.insert(make_pair(stringval,patval));
+            }
+            //value present in both...check if they are equal
+            else if(end == false && send == false)
+            {
+                
+                if(patternfound != patval && stringfound != stringval)
+                    return false;
+                
+            }
+            else
+                return false;
+            
+            
+        }
+        // if all of them match then return true;
+         return true;
+        
+    }
+};
