@@ -1,0 +1,72 @@
+//CPP solution
+
+class Solution {
+public:
+    int compare(string a, string b, vector<int> &alphanumber)
+    {
+        int i = 0,j=0;
+        int aval1;
+            int bval1;
+            while(i<a.length() && j<b.length() && a[i] == b[j])
+            {
+                i++;
+                j++;
+            }
+            if(i == a.length() && j == b.length())
+            {
+                return 0;
+            }
+            else if(i == a.length())
+            {
+                bval1 = alphanumber[b[j] - 'a'];
+                aval1 = 0;
+                    //return (0-bval1);
+            }
+            else if(j == b.length()){
+                bval1 = 0;
+                aval1 = alphanumber[a[i]-'a'];
+               // return(aval1);
+            }
+            else
+            {
+                aval1 = alphanumber[a[i]-'a'];
+                bval1 = alphanumber[b[j] - 'a'];
+                
+                cout<<"a[i] = "<<a[i]<<" b[i] = "<<b[i]<<" aval1 = "<<aval1<<" bval1 = "<<bval1<<endl;
+            } 
+        return(aval1 - bval1);
+
+    }
+    
+    
+    bool isAlienSorted(vector<string>& words, string order) {
+        vector<int>alphanumber(30);
+        for(int i=0 ; i<order.length() ; i++)
+        {
+            // cout<<order[i]<<endl;
+            // cout<<order[i] - 'a'<<endl;
+            
+            alphanumber[(order[i] - 'a')] = i;
+        }
+        for(int i=0 ; i<26;i++)
+            cout<<alphanumber[i]<<" ";
+        
+        bool flag = true;
+        
+        for(int i=0;i<words.size()-1 ; i++)
+        {
+            string a = words[i];
+            string b = words[i+1];
+            int diff = compare(a,b,alphanumber);
+            if(diff > 0)
+            {
+                //cout<<"a = "<<a<<" b = "<<b<<endl;
+                flag = false;
+                break;
+            }
+        }
+        if(flag == false)
+            return false;
+        return true;
+    }
+};
