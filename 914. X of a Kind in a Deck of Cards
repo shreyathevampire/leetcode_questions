@@ -1,0 +1,69 @@
+//////////Cpp solution
+
+
+class Solution {
+public:
+    
+      int gcd(int x, int y)
+    {
+        int r;
+        while(y != 0)
+        {
+            r = x%y;
+            x = y;
+            y = r;
+        }
+        return x;
+    }
+  
+    
+    
+    
+    bool hasGroupsSizeX(vector<int>& deck) {
+        int countdeck[10000];
+        
+        if(deck.size() == 1)
+            return false;
+        else if(deck.size() == 2)
+        {
+            if(deck[0] == deck[1])
+                return true;
+            return false;
+        }
+        
+        for(int i=0;i<10000;i++)
+            countdeck[i] = 0;
+        int ele;
+        int flag1=false;
+        for(int i=0 ; i<deck.size() ;i++)
+        {
+            ele = deck[i];
+            countdeck[ele]++;
+        }
+        
+         vector<int>finalval;
+        for(int i=0;i<10000;i++)
+        {
+            if(countdeck[i]>0)
+                finalval.push_back(countdeck[i]);
+        }
+        
+        if(finalval.size() == 1)
+            return true;
+        
+        cout<<finalval[0]<<" "<<finalval[1]<<endl;
+        int g = gcd(finalval[0],finalval[1]);
+        
+        for(int i=0;i<finalval.size();i++)
+        {
+            if(finalval[i] != 0 )
+                g = gcd(g,finalval[i]);
+        }
+        
+        
+        if(g == 1)
+            return false;
+    
+        return true;
+    }
+};
