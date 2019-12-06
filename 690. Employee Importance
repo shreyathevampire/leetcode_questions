@@ -1,0 +1,61 @@
+/*
+// Employee info
+class Employee {
+public:
+    // It's the unique ID of each node.
+    // unique id of this employee
+    int id;
+    // the importance value of this employee
+    int importance;
+    // the id of direct subordinates
+    vector<int> subordinates;
+};
+*/
+class Solution {
+public:
+    
+    int calsum(map<int, pair<int,vector<int> > > &empsub, int id)
+    {
+        pair<int, vector<int> >temp;
+        pair<int, vector<int> >emptemp;
+        temp = empsub[id];
+        int sum=temp.first;
+        
+        if((temp.second).size() == 0)
+            return sum;
+        
+         for(auto it = (temp.second).begin() ; it != (temp.second).end() ; it++)
+        {
+            int ele = *it;
+            emptemp = empsub[ele];
+            sum = sum + calsum(empsub,ele);
+            cout<<"sum "<<sum<<" id "<<ele<<endl;
+        }
+        return sum;
+        
+        
+    }
+    
+    int getImportance(vector<Employee*> employees, int id) {
+        Employee* e = new Employee();
+        map<int,pair<int,vector<int> > >empsub;
+        for(int i=0; i<employees.size() ;i++)
+        {
+            e = employees[i];
+            empsub.insert(make_pair(e->id, make_pair(e->importance ,e->subordinates)));
+            
+        }
+        
+       
+        
+        if(empsub.find(id) == empsub.end())
+            return 0 ;
+        
+       
+        int sum = calsum(empsub, id);
+        
+        cout<<sum<<endl;
+            
+        return sum;
+    }
+};
