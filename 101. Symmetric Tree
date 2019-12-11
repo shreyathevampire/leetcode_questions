@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool checksym(TreeNode* t1, TreeNode* t2)
+    {
+        bool val1;
+        if(t1 == NULL && t2 == NULL)
+            return true;
+        else if(t1 && t2)
+        {
+            if(t1->val == t2->val)
+            {
+                //cout<<t1->val<<" "<<t2->val<<endl;
+                val1 = checksym(t1->left, t2->right) 
+                      && (checksym(t1->right,t2->left));
+                cout<<val1<<endl;
+                return(val1);
+            }
+            else
+                return false;
+        }
+        return false;
+    }
+    bool isSymmetric(TreeNode* root) {
+        //no tree exists
+        if(root == NULL)
+            return true;
+        //tree with only one node
+        else if(root->left==NULL && root->right==NULL)
+            return true;
+        else if(root->left && root->right)
+        {
+            bool l,r;
+            if(root->left->val == root->right->val)
+            {
+                l = checksym(root->left,root->right);
+                return(l);
+            }
+            
+        }
+        else
+        {
+            return false;
+        }
+        return false;
+    }
+};
