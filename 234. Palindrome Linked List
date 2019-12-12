@@ -1,0 +1,40 @@
+//Space Complexity: O(n)
+//Time Complexity: O(n) -- 2passes
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        stack<int>s;
+        if(head == NULL)
+            return true;
+        ListNode *temp = head;
+        if(temp->next == NULL)
+            return true;
+        while(temp != NULL)
+        {
+            s.push(temp->val);
+            temp = temp->next;
+        }
+        temp = head;
+        while(!s.empty())
+        {
+            if(s.top() == temp->val)
+            {
+                s.pop();
+                temp = temp->next;
+            }
+            else
+                return false;
+        }
+        return true;
+        
+    }
+};
