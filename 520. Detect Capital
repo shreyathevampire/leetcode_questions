@@ -1,0 +1,57 @@
+class Solution {
+public:
+    bool checkonecapital(string word, int pos)
+    {
+        for(int i=pos;i<word.length();i++)
+        {
+            if(isupper(word[i]))
+                return false;
+        }
+        return true;
+    }
+    
+    bool checkcapitals(string word, int pos)
+    {
+        int count = 0;
+        for(int i=pos;i<word.length() ;i++)
+        {
+            if(isupper(word[i]))
+                count++;
+        }
+        cout<<count<<" "<<word.length()<<endl;
+        int diff = word.length()-2;
+        cout<<diff<<endl;
+        if(count == diff)
+            return true;
+        else
+            return false;
+    }
+    bool detectCapitalUse(string word) {
+        if(word.length() == 1)
+        {
+            if(isupper(word[0]))
+                return true;
+            else if(islower(word[0]))
+                return true;
+        }
+        if(isupper(word[0]) && isupper(word[1]))
+        {
+            //check if entire string is capital
+            bool check = checkcapitals(word,2);
+            return check;
+        }
+        else if(isupper(word[0]) && islower(word[1]))
+        {
+            //check if there is atleast one captial
+            bool check = checkonecapital(word,2);
+            return check;
+        }
+        else if(islower(word[0]) && islower(word[1]))
+        {
+            //check if there is atleast one capital
+            bool check = checkonecapital(word, 2);
+            return check;
+        }
+        return false;
+    }
+};
