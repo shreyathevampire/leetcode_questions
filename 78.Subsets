@@ -1,0 +1,55 @@
+class Solution {
+public:
+    void findsubsets(vector<vector<int>> &result, vector<int>&nums, vector<int> &temp,int k)
+    {
+       // vector<int>temp;
+        if(k == nums.size())
+        {
+            //cout<<"k = "<<k<<endl;
+            // for(auto x = temp.begin() ; x!= temp.end() ; x++)
+            //     cout<<*x<<endl;
+            result.push_back(temp);
+        }
+        else
+        {
+            //without including k
+            findsubsets(result,nums,temp,k+1);
+            temp.push_back(nums[k]);
+            // cout<<" k = "<<k<<endl;
+             // for(auto x = temp.begin() ; x!= temp.end() ; x++)
+             //    cout<<*x<<" ";
+            // cout<<endl;
+            //including k
+            findsubsets(result,nums,temp,k+1);
+            temp.pop_back();
+        }
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector <vector<int> >result;
+        set<vector<int>> temp2;
+        vector<int>temp;
+        sort(nums.begin(),nums.end());
+        findsubsets(result,nums,temp,0);
+        // for(auto x: result)     
+        // {cout<<"size "<<x.size()<<endl;
+        //     for(auto y: x)
+        //         cout<<y<<" ";
+        //     cout<<endl;
+        // }
+        for(auto x: result)
+        {
+            temp2.insert(x);
+        }
+       // sort(temp2.begin(), temp2.end());
+        for(auto x: temp2)
+        {
+            for(auto y: x)
+                cout<<y<<" ";
+            cout<<endl;
+        }
+        
+        
+        return result;
+        
+    }
+};
