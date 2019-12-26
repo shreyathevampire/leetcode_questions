@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> tables(amount+1);
+        for(int i=0;i<=amount;i++)
+            tables[i] = INT_MAX;
+        tables[0] = 0;
+        for(int i=1;i<=amount;i++)
+        {
+            for(int j=0;j<coins.size();j++)
+            {
+                if(coins[j]<=i)
+                {
+                    int sub_res = tables[i-coins[j]];
+                    // cout<<sub_res<<" "<<coins[j]<<endl;
+                    if(sub_res != INT_MAX && sub_res+1<tables[i])
+                        tables[i] = sub_res+1;
+                }
+            }
+        }
+        if(tables[amount] == INT_MAX)
+            return -1;
+        return(tables[amount]);
+    }
+};
