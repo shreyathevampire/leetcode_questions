@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool palin(string s)
+    {
+        int i=0, j = s.length()-1;
+        while(i<j)
+        {
+            if(s[i] != s[j])
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+    bool isPalindrome(int x) {
+        if(x<0)
+            return false;
+        string s = "";
+        int temp = x;
+        int d;
+        char p;
+        while(temp)
+        {
+            d = temp%10;
+            p = d+'0';
+            s = s+p;
+            temp = temp/10;
+        }
+        bool res =  palin(s);
+        cout<<s<<endl;
+        return res;
+    }
+};
