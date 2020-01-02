@@ -1,0 +1,57 @@
+class Solution {
+public:
+    bool bs(vector<int>&nums, int lb, int ub, int ele)
+    {
+        // cout<<"lb "<<lb<<" "<<ub<<endl;
+        if(lb<=ub)
+        {
+            int mid = lb + (ub-lb)/2;
+            // cout<<"mid "<<mid<<endl;
+            if(nums[mid] == ele)
+                return true;
+            if(nums[mid]<ele)
+                return(bs(nums, mid+1, ub, ele));
+            else 
+                return(bs(nums,lb,mid-1,ele));
+            
+        }
+        return false;
+    }
+    int findPairs(vector<int>& nums, int k) {
+        if(k<0)
+            return 0;
+        
+        sort(nums.begin(),nums.end());
+        
+        set<pair<int,int>>pairs;
+        int diff,diff1;
+        for(int i=0;i<nums.size();i++)
+        {
+            diff = nums[i] + k;
+            diff1 = nums[i] - k;
+             // cout<<diff<<" "<<diff1<<endl;
+            bool tdiff = bs(nums,i+1,nums.size()-1,diff);
+            bool tdiff1 = bs(nums,i+1,nums.size()-1,diff1);
+            // cout<<tdiff<<" "<<tdiff1<<endl;
+            if(tdiff || tdiff1)
+            {
+                cout<<"entered"<<endl;
+                if(tdiff)
+                {
+                    cout<<"diff  "<<diff<<endl;
+                    pair temp = make_pair(nums[i],diff);
+                    pairs.insert(temp);
+                }
+                else
+                {
+                    cout<<"diff1  "<<diff1<<endl;
+                    pair temp = make_pair(nums[i],diff1);
+                    pairs.insert(temp);
+                }    
+            }
+        }
+        
+        return pairs.size();
+        
+    }
+};
