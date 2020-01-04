@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        
+        int i=0;
+        
+        //stack of indexes 
+        
+        int ele;
+        int maxArea = 0;
+        int area;
+        stack<int>s;
+        while(i<heights.size())
+        {
+            if(s.empty() || heights[s.top()]<= heights[i])
+            {
+                s.push(i);
+                // cout<<"in stack  "<<i<<endl;
+                i++;
+            }
+            else
+            {
+                ele = s.top();
+                s.pop();
+                if(s.empty())
+                    area = heights[ele] * i;
+                else
+                    area = heights[ele] *(i-1-s.top());
+                // cout<<area<<endl;
+                if(area > maxArea)
+                    maxArea = area;
+            }
+        }
+        while(!s.empty())
+        {
+                ele = s.top();
+                s.pop();
+                if(s.empty())
+                    area = heights[ele] * i;
+                else
+                    area = heights[ele] *(i-1-s.top());
+            // cout<<"area "<<area<<endl;
+                if(area > maxArea)
+                    maxArea = area;
+                
+        }
+        return maxArea;
+    }
+};
