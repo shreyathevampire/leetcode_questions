@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool bin_search(vector<int> & arr, int lb, int ub, int ele)
+    {
+        if(lb <= ub)
+        {
+            int mid = lb + (ub-lb)/2;
+            if(arr[mid] == ele)
+                return true;
+            if(arr[mid]<ele)
+                return(bin_search(arr,mid+1,ub,ele));
+            else
+                return(bin_search(arr,lb,mid-1,ele));
+        }
+        return false;
+    }
+    
+    
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(matrix.size()==0)
+            return false;
+        int r = matrix.size();
+        cout<<"r "<<r<<endl;
+        if(matrix[0].size()==0)
+            return false;
+        int c = matrix[0].size();
+        
+        for(int i=0;i<r;i++)
+        {
+            if(matrix[i][0]<= target && matrix[i][c-1]>= target)
+            {
+                bool val = bin_search(matrix[i], 0, c-1, target);
+                if(val)
+                    return val;
+            }
+        }
+        return false;
+    }
+};
