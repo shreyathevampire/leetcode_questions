@@ -1,0 +1,87 @@
+class Solution {
+public:
+    
+    void initialize(vector<int>& arr, vector<int>& size)
+    {
+        for(int i=0;i<arr.size();i++)
+        {
+            arr[i] = i;
+            size[i] = 1;
+        }
+    }
+    
+    int root(vector<int>& arr, int a)
+    {
+        while(arr[a] != a)
+        {
+            arr[a] = arr[arr[a]];
+            a = arr[a];
+        }
+        return a;
+    }
+    
+    bool find(vector<int>& arr, int a, int b)
+    {
+        if(root(arr,a) == root(arr,b))
+            return true;
+        return false;
+    }
+    
+    void unionf(vector<int>&arr, vector<int>& size, int a, int b)
+    {
+        int roota = root(arr,a);
+        int rootb = root(arr,b);
+        if(size[roota]<size[rootb])
+        {
+            arr[roota] = arr[rootb];
+            size[rootb] += size[roota];
+        }
+        else
+        {
+            arr[rootb] = arr[roota];
+            size[roota] += size[rootb];
+        }
+    }
+    
+    
+    
+    int makeConnected(int n, vector<vector<int>>& connections) {
+       stack<pair<int,int>>edges;
+        for(int i = 0;i<connections.size();i++)
+        {
+              
+                edges.push(make_pair(connections[i][0],connections[i][1]));
+        }
+        int extra = 0;
+        int count = n;
+        vector<int>arr(n,0);
+        vector<int>size(n,0);
+        initialize(arr,size);
+        pair<int,int>temp;
+        while(!edges.empty())
+        {
+            temp = edges.top();
+            edges.pop();
+            if(find(arr,temp.first,temp.second))
+            {
+                count--;
+                extra++;
+            }
+            else
+            {
+                unionf(arr,size,temp.first,temp.second);
+            }
+        }
+        int noc = 0;
+        for(int i = 0;i<n;i++)
+        {
+            cout<<arr[i]<<" ";
+            if(arr[i] == i)
+                noc += 1;
+        }
+        
+        if(extra>= noc-1)
+            return (noc-1);
+        return -1;
+    }
+};
