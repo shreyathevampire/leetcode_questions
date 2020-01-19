@@ -1,0 +1,46 @@
+class Solution {
+public:
+    void print(vector<int>&extents)
+    {
+        for(int i=0;i<extents.size();i++)
+            cout<<extents[i]<<" ";
+        cout<<endl;
+    }
+    
+    
+    int minTaps(int n, vector<int>& ranges) {
+        vector<int>extents(n+1,0);
+        int left,right;
+        int x = ranges.size();
+        for(int i=0;i<x;i++)
+        {
+            left = max(0,i-ranges[i]);
+            right = min(i+ranges[i],n);
+            extents[left] = max(extents[left],right);
+        }
+        
+        int currEnd = extents[0];
+        int maxReach = currEnd;
+        int taps = 0;
+        if(extents[0] == 0)
+            return -1;
+      //  print(extents);
+        for(int i = 1;i<=n;i++)
+        {
+            // cout<<currEnd<<endl;
+            maxReach = max(maxReach,extents[i]);
+             if(currEnd<i)
+                    return -1;
+            if(currEnd == i)
+            {
+                cout<<currEnd<<endl;
+                taps++;
+                currEnd = maxReach;
+               
+            }
+        }
+        // if(taps == 0)
+        //     return -1;
+         return taps;
+    }
+};
