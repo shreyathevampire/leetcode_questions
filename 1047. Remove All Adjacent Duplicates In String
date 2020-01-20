@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string removeDuplicates(string S) {
+        if(S.length() == 0)
+            return "";
+        stack<char>occ;
+        int i=0;
+        while(i<S.length())
+        {
+            if(occ.empty())
+            {
+                occ.push(S[i]); i++;
+            }
+            else if(S[i] == occ.top())
+            {
+                // while(i<S.length() && S[i] == occ.top())
+                //     i++;
+                occ.pop();
+                i++;
+            }
+            else
+            {
+                occ.push(S[i]) ; i++;
+            }
+        }
+        string res= "";
+        while(!occ.empty())
+        {
+            res = occ.top() + res;
+            occ.pop();
+        }
+        return res;
+    }
+};
