@@ -1,0 +1,34 @@
+
+''' we first considered the non -leaf nodes by taking the product of the local smallest value and taking the product
+of the value with the minimum value neighbour.
+the rest over values in vector indicate the leaf nodes as as the question specifies we pick up the maximum leaf node values from left
+right subtree and take the product of it.
+'''
+
+
+
+
+
+
+class Solution {
+public:
+    int mctFromLeafValues(vector<int>& arr) {
+        vector<int>s = {INT_MAX};
+        int res = 0;
+        for (int a :arr) 
+        {
+            while(s.back() <= a)
+            {
+                int mid = s.back();
+                s.pop_back();
+                res += mid*(min(a,s.back()));
+            }
+            s.push_back(a);
+        }
+        for(int i = 2; i<s.size();i++)
+        {
+            res += (s[i]*s[i-1]);
+        }
+        return res;
+    }
+};
