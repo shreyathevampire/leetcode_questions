@@ -1,0 +1,88 @@
+# uses topological sorting
+
+class Solution {
+public:
+    /**
+     * @param words: a list of words
+     * @return: a string which is correct order
+     */
+     int wordcounts(vector<string>& words, vector<vector<int>>& visited)
+     {
+         
+         int count = 0;
+         for(string x : words)
+         {
+            for(int i=0;i<x.length();i++)
+                if(!visited[0][x[i]-'a'])
+                {
+                    visited[0][x[i]-'a'] = 1;
+                    count++;
+                }
+         }
+         return count;
+     }
+     
+    string topologicalsort(vector<int>& visit,vector<int>& in_deg,map<char,vector<char>>& adj)
+    {
+        string res = "";
+        ''' as question as:
+        *There may be multiple valid order of letters, return the smallest in normal lexicographical order* 
+        Hence used priority_queue as data structure '''
+        priority_queue<char, vector<char>, greater<char>>zeroindeg;
+        for(int i=0; i <visit.size() ; i++)
+        {
+            if(visit[i] && in_deg[i] == 0)
+            {
+                cout<<"initial in_deg = 0 "<<char(i+'a')<<endl;
+                zeroindeg.push(i+'a');
+            }
+        }
+        while(!zeroindeg.empty())
+        {
+            char ele = zeroindeg.top();
+            zeroindeg.pop();
+            res += ele;
+            for(auto it = adj[ele].begin(); it !=  adj[ele].end() ; it++)
+            {
+                char dest = *it;
+                in_deg[dest-'a']--;
+                if(in_deg[dest-'a'] == 0)
+                    zeroindeg.push(dest);
+            }
+            
+        }
+        return res;
+    }
+     
+     
+    string alienOrder(vector<string> &words) {
+        // Write your code here
+        vector<vector<int>>visited(2,vector<int>(26,0));
+       int wordcount = wordcounts(words, visited);
+       map<char,vector<char>>adj;
+       
+       for(int i=0;i<words.size()-1;i++)
+       {
+           string src = words[i];
+           string dest = words[i+1];
+           for(int i=0; i < src.length() && dest.length() ; i++)
+           {
+               if(src[i] != dest[i]){
+                adj[src[i]].push_back(dest[i]);
+                visited[1][dest[i]-'a']++;
+                break;
+               }
+           }
+           
+       }
+       vector<int>in_deg;
+       vector<int>visit;
+       visit = visited[0];
+       in_deg = visited[1];
+       string res = topologicalsort(visit,in_deg, adj);
+       
+       ''' if res length !=  no of unique words in the set => there is a cycle in the graph and hence topologicalsort not possible'''
+       return(res.length() == wordcount ? res : "");
+       
+    }
+};
